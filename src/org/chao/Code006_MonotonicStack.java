@@ -99,17 +99,68 @@ public class Code006_MonotonicStack {
         return arr;
     }
 
-    public static void main(String[] args) {
-        int testTimes = 2000000;
-        System.out.println("test begin");
-        for (int i = 0; i < testTimes; i++) {
-            int[] arr = gerenareRondomArray();
-            if (max1(arr) != max2(arr)) {
-                System.out.println("FUCK!");
-                break;
+//    public static void main(String[] args) {
+//        int testTimes = 2000000;
+//        System.out.println("test begin");
+//        for (int i = 0; i < testTimes; i++) {
+//            int[] arr = gerenareRondomArray();
+//            if (max1(arr) != max2(arr)) {
+//                System.out.println("FUCK!");
+//                break;
+//            }
+//        }
+//        System.out.println("test finish");
+//    }
+
+    /**
+     * 求最大方格数
+     *
+     * @param arr
+     * @return
+     */
+    public static int maxValue(int[] arr) {
+        Stack<List<Integer>> stack = new Stack<>();
+        int max = Integer.MIN_VALUE;
+        for (int i = 0; i < arr.length; i++) {
+            while (!stack.isEmpty() && arr[stack.peek().get(0)] > arr[i]) {
+                List<Integer> pop = stack.pop();
+                int leftLessIndex = stack.isEmpty() ? -1 : stack.peek().get(stack.peek().size() - 1);
+                for (Integer integer : pop) {
+                    if (leftLessIndex == -1){
+                        max = Math.max(max, arr[i] * (i + 1));
+                    }else{
+                        max = Math.max(max, Math.max(arr[leftLessIndex] * (integer - leftLessIndex + 1), arr[i] * (i - integer + 1)));
+                    }
+                }
+            }
+            if (!stack.isEmpty() && arr[stack.peek().get(0)] == arr[i]) {
+                stack.peek().add(i);
+            } else {
+                List<Integer> list = new ArrayList<>();
+                list.add(i);
+                stack.push(list);
             }
         }
-        System.out.println("test finish");
+
+        while (!stack.isEmpty()){
+            List<Integer> pop = stack.pop();
+            int leftLessIndex = stack.isEmpty() ? -1 : stack.peek().get(stack.peek().size() -1);
+            for (Integer integer : pop) {
+                if (leftLessIndex == -1) {
+                    max = Math.max(max, arr[integer] * arr.length);
+                } else {
+                    max = Math.max(max, arr[integer] * (arr.length - integer + 1));
+                }
+            }
+        }
+        return max;
     }
+
+    public static void main(String[] args) {
+        int[] arr = {3,4,5,2,9,7,8,7,8,2,2,2,2,2,2,2,2,2,2,22,2,2};
+        System.out.println(maxValue(arr));
+    }
+
+
 
 }

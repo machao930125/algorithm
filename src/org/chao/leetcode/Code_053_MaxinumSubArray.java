@@ -1,9 +1,7 @@
 package org.chao.leetcode;
 
-import java.util.ArrayList;
-
 /**
- * 最大子序和
+ * 动态规划
  * <p>
  * 来源：力扣（LeetCode）
  * https://leetcode-cn.com/problems/maximum-subarray
@@ -40,9 +38,5 @@ public class Code_053_MaxinumSubArray {
     public static void main(String[] args) {
         int[] nums = {-2,1,-3,4,-1,2,1,-5,4};
         System.out.println(maxSubArray(nums));
-        ArrayList<Object> objects = new ArrayList<>();
-        for (Object object : objects) {
-
-        }
     }
 }
