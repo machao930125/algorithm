@@ -1,6 +1,11 @@
 package org.chao.leetcode;
 
-
+/**
+ * 动态规划
+ * <p>
+ * 来源：力扣（LeetCode）
+ * https://leetcode-cn.com/problems/min-cost-climbing-stairs/
+ */
 public class Code_746_ClimbStairs {
     // [10,15,20,30,30,30] 60
     public static int minCostClimbingStairs(int[] cost) {
