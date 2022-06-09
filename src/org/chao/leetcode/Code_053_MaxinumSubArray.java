@@ -9,34 +9,23 @@ package org.chao.leetcode;
 public class Code_053_MaxinumSubArray {
 
     public static int maxSubArray(int[] nums) {
-        // 边界
-        if (nums.length == 0) {
+        if (nums == null || nums.length == 0){
             return 0;
         }
-        if (nums.length == 1) {
-            return nums[0];
-        }
 
-        // 定义状态
-        int[] max = new int[nums.length];
-        // 初始值
-        max[0] = nums[0];
-        int result = max[0];
-
-        // 状态转移 cur = max[i - 1] + nums[i] or nums[i];
-        for (int i = 1; i < nums.length; i++) {
-            if (max[i - 1] > 0) {
-                max[i] = max[i - 1] + nums[i];
-            } else {
-                max[i] = nums[i];
-            }
-            result = Math.max(result, max[i]);
+        int ans = nums[0];
+        int sum = 0;
+        for(int i = 0; i < nums.length; i ++){
+            sum += nums[i];
+            ans = Math.max(ans, sum);
+            sum = sum < 0 ? 0 : sum;
         }
-        return result;
+        return ans;
+
     }
 
     public static void main(String[] args) {
-        int[] nums = {-2,1,-3,4,-1,2,1,-5,4};
+        int[] nums = {-2, -1};
         System.out.println(maxSubArray(nums));
     }
 }

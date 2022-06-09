@@ -10,7 +10,9 @@ import org.junit.jupiter.api.Test;
  * 4、删除链表某个节点
  * 5、合并两个链表
  * 6、翻转链表
- * 7、K个一组翻转链表
+ * 7、判断两个链表是否相交，返回交点
+ * 8、K个一组翻转链表
+ * 9、删除重复节点
  */
 public class NodeTest {
     /**
@@ -152,6 +154,26 @@ public class NodeTest {
         Node.print(pre);
     }
 
+    /**
+     * 7、获取两个链表交点
+     */
+    @Test
+    public void getIntersectionNode(){
+        Node headA = Node.initNodeList(3);
+        Node headB = Node.initNodeList(3);
+
+        Node A = headA;
+        Node B = headB;
+
+        while (A!= B ){
+            A = A != null ? A.next : headB;
+            B = B != null ? B.next : headA;
+        }
+
+        System.out.println(A);
+
+    }
+
 
 
     @Test
@@ -161,6 +183,57 @@ public class NodeTest {
 
         Node.print(result);
     }
+
+    /**
+     * 合并k 个链表
+     *
+     * @param lists
+     * @return
+     */
+    public Node mergeKLists(Node[] lists) {
+        return merge(lists, 0, lists.length - 1);
+    }
+
+    public Node merge(Node[] lists, int l, int r) {
+        if (l == r) {
+            return lists[l];
+        }
+        if (l > r) {
+            return null;
+        }
+        int mid = (l + r) >> 1;
+        return mergeTwoLists(merge(lists, l, mid), merge(lists, mid + 1, r));
+    }
+
+    public Node mergeTwoLists(Node a, Node b) {
+       if (a == null || b == null){
+           return a != null ? a: b;
+       }
+
+        Node dummy = new Node(-1);
+
+       Node cur = dummy;
+
+       while (a!= null && b != null){
+           if (a.value < b.value){
+               cur.next = a;
+               a = a.next;
+           }else {
+               cur.next = b;
+               b = b.next;
+           }
+           cur = cur.next;
+       }
+
+       if (a == null){
+           cur.next = b;
+       }else {
+           cur.next = a;
+       }
+
+       return dummy.next;
+    }
+
 
     /**
      * 链表K个一组进行翻转
@@ -205,5 +278,27 @@ public class NodeTest {
         return pre;
     }
 
+    /**
+     * 删除重复节点
+     *
+     * @param head
+     * @return
+     */
+    public Node deleteDuplicates(Node head){
+        if (head == null){
+            return null;
+        }
+
+        Node cur = head;
+        while (cur.next != null){
+            if (cur.value == cur.next.value){
+                cur.next = cur.next.next;
+            }else {
+                cur = cur.next;
+            }
+        }
+
+        return head;
+    }
 
 }
